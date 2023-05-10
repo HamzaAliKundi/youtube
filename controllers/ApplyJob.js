@@ -50,4 +50,9 @@ const getCandidateApplyJob = asyncHander(async (req, res) => {
    }
 });
 
-module.exports = { candidateApplyJob, getCandidateApplyJob };
+const getSingleCandidateDetail = asyncHander(async (req, res) => {
+   const candidate = await CandidateApplyJob.findById(req.params.id);
+   res.json(candidate);
+})
+
+module.exports = { candidateApplyJob, getCandidateApplyJob, getSingleCandidateDetail };
