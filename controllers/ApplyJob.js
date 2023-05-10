@@ -52,7 +52,13 @@ const getCandidateApplyJob = asyncHander(async (req, res) => {
 
 const getSingleCandidateDetail = asyncHander(async (req, res) => {
    const candidate = await CandidateApplyJob.findById(req.params.id);
-   res.json(candidate);
+   
+   try {
+      res.status(200).json(candidate);
+   } catch (error) {
+      res.status(400)
+      throw new Error(error);
+   }
 })
 
 module.exports = { candidateApplyJob, getCandidateApplyJob, getSingleCandidateDetail };

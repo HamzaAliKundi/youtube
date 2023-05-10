@@ -34,7 +34,20 @@ const getContactClientInfo = asyncHandler(async (req, res) => {
    }
 });
 
+const getSingleClientDestail = asyncHandler(async(req, res) => {
+   const client = await ClientInfo.findById(req.params.id);
+   
+   try {
+      res.status(200).json(client);
+   } catch (error) {
+      res.status(400)
+      throw new Error(error);
+   }
+
+})
+
 module.exports = {
    contactCLientInfo,
    getContactClientInfo,
+   getSingleClientDestail
 };
