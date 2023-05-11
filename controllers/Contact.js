@@ -44,10 +44,27 @@ const getSingleClientDestail = asyncHandler(async(req, res) => {
       throw new Error(error);
    }
 
+});
+
+const deleteClient = asyncHandler(async(req, res) => {
+   const client = await ClientInfo.findByIdAndDelete(req.params.id);
+
+   if(!client) {
+      res.status(404);
+      throw new Error("Client not found");
+   }
+
+   try {
+      res.status(200).json({message: "Client Deleted", name: client.name});
+   } catch (error) {
+      res.status(400);
+      throw new Error(error); 
+   }
 })
 
 module.exports = {
    contactCLientInfo,
    getContactClientInfo,
-   getSingleClientDestail
+   getSingleClientDestail,
+   deleteClient
 };

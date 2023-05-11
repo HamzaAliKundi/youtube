@@ -61,4 +61,21 @@ const getSingleCandidateDetail = asyncHander(async (req, res) => {
    }
 })
 
-module.exports = { candidateApplyJob, getCandidateApplyJob, getSingleCandidateDetail };
+const deleteCandidate = asyncHander(async (req, res) => {
+   const Candidate = await CandidateApplyJob.findByIdAndDelete(req.params.id);
+
+   if(!Candidate) {
+      res.status(404);
+      throw new Error("Candidate not found");
+   }
+
+   try {
+      res.status(200).json({message: "Candidate Deleted", name: Candidate.fullName});
+   } catch (error) {
+      res.status(400);
+      throw new Error(error); 
+   }
+
+})
+
+module.exports = { candidateApplyJob, getCandidateApplyJob, getSingleCandidateDetail, deleteCandidate };
