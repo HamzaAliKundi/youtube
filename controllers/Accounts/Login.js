@@ -13,11 +13,11 @@ const loginAdmin = asyncHandler(async (req, res) => {
    if (adminExist && (await bcrypt.compare(password, adminExist.password))) {
       res.status(200).json({
          _id: adminExist.id,
-         registerAs: adminExist.name,
+         name: adminExist.name,
          email: adminExist.email,
          token: generateToken(
             adminExist._id,
-            adminExist.registerAs,
+            adminExist.name,
             adminExist.email
          ),
       });
