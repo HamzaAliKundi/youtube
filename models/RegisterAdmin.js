@@ -16,6 +16,11 @@ const RegisterAdmin = mongoose.Schema(
          type: String,
          require: [true, "No Password provided"],
       },
+
+      superAdmin: {
+         type: Boolean,
+         default: false,
+      }
    },
    {
       timestamps: true,

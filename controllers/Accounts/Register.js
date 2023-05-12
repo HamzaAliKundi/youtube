@@ -4,7 +4,7 @@ const asyncHandler = require("express-async-handler");
 const Admin = require("../../models/RegisterAdmin");
 
 const registerNewAdmin = asyncHandler(async (req, res) => {
-   const { name, email, password } = req.body;
+   const { name, email, password, superAdmin } = req.body;
 
    if (!name || !email || !password) {
       res.status(400);
@@ -28,6 +28,7 @@ const registerNewAdmin = asyncHandler(async (req, res) => {
       name: name,
       email: email,
       password: encryptedPassword,
+      superAdmin: superAdmin,
    });
 
    //  **Sending response back to user including JSON_WEB_TOKEN
@@ -39,7 +40,8 @@ const registerNewAdmin = asyncHandler(async (req, res) => {
          token: generateToken(
             newAdmin._id,
             newAdmin.registerAs,
-            newAdmin.email
+            newAdmin.email,
+            newAdmin.superAdmin
          ),
       });
    } else {
@@ -49,8 +51,8 @@ const registerNewAdmin = asyncHandler(async (req, res) => {
 });
 
 //  **Generating a Token Function
-const generateToken = (id, name, email) => {
-   return jwt.sign({ id, name, email }, "bcsfSecretJWTEncryption", {
+const generateToken = (id, name, email, superAdmin) => {
+   return jwt.sign({ id, name, email, superAdmin }, "bcsfSecretJWTEncryption", {
       expiresIn: "30d",
    });
 };
